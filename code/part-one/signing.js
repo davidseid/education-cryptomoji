@@ -61,11 +61,13 @@ const getPublicKey = privateKey => {
 const sign = (privateKey, message) => {
   // Your code here
   const hash = createHash('sha256');
-  const hashedMsg = hash.digest(message);
+  hash.update(message);
+  const hashedMsg = hash.digest();
   const buffedKey = Buffer.from(privateKey, 'hex');
+  let sigObj = secp256k1.sign(hashedMsg, buffedKey);
   
-  let result = secp256k1.sign(hashedMsg, buffedKey);
-  return result.signature.toString('hex');
+  let sigString = sigObj.signature.toString('hex');
+  return sigString;
 };
 
 /**
@@ -80,11 +82,14 @@ const sign = (privateKey, message) => {
  */
 const verify = (publicKey, message, signature) => {
   // Your code here
-  const buffMsg = Buffer.from(message);
+  const hash = createHash('sha256');
+  hash.update(message);
+  const hashedMsg = hash.digest();
   const buffPubKey = Buffer.from(publicKey, 'hex');
   const buffSig = Buffer.from(signature, 'hex');
   
-  return secp256k1.verify(buffMsg, buffSig, buffPubKey);
+  let isVerified = secp256k1.verify(hashedMsg, buffSig, buffPubKey);
+  return isVerified;
 };
 
 module.exports = {
