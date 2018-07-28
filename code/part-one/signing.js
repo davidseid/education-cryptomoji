@@ -15,14 +15,13 @@ const { randomBytes, createHash } = require('crypto');
  */
 const createPrivateKey = () => {
   // Enter your solution here
-  
   let privKey;
-
   do {
     privKey = randomBytes(32);
   } while (!secp256k1.privateKeyVerify(privKey));
 
-  return privKey.toString('hex');
+  let result = privKey.toString('hex');
+  return result;
 };
 
 /**
@@ -40,6 +39,10 @@ const createPrivateKey = () => {
  */
 const getPublicKey = privateKey => {
   // Your code here
+  let bufferPrivateKey = Buffer.from(privateKey, 'hex');
+  let pubKey = secp256k1.publicKeyCreate(bufferPrivateKey);
+
+  return pubKey.toString('hex');
 
 };
 
