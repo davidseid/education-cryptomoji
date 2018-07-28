@@ -81,6 +81,9 @@ describe('Signing module', function() {
     });
 
     it('should create a valid signature', function() {
+      // console.log('hashmsg' + sha256(message));
+      // console.log('vuff sig' + toBytes(signature));
+      // console.log('buff pubkey' + toBytes(publicKey));
       const isValid = secp256k1.verify(
         sha256(message),
         toBytes(signature),
