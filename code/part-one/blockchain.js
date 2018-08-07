@@ -23,11 +23,11 @@ class Transaction {
    */
   constructor(privateKey, recipient, amount) {
     // Enter your solution here
+    
     this.source = signing.getPublicKey(privateKey);
     this.recipient = recipient;
     this.amount = amount;
-    this.signature = signing.sign(privateKey, recipient + amount);
-    console.log(this.signature.length);
+    this.signature = signing.sign(privateKey, this.source + this.recipient + this.amount);
   }
 }
 
