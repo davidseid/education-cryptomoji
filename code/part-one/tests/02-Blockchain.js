@@ -70,9 +70,9 @@ describe('Blockchain module', function() {
 
     it('should calculate the same hash with the same nonce', function() {
       block.calculateHash(0);
+      
       const originalHash = block.hash;
       block.calculateHash(0);
-
       expect(block.hash).to.equal(originalHash);
     });
 
@@ -80,7 +80,7 @@ describe('Blockchain module', function() {
       block.calculateHash(0);
       const originalHash = block.hash;
       block.calculateHash(1);
-
+      console.log(originalHash === block.hash);
       expect(originalHash).to.not.equal(block.hash);
     });
 

@@ -49,7 +49,12 @@ class Block {
    */
   constructor(transactions, previousHash) {
     // Your code here
+    this.transactions = transactions;
+    this.previousHash = previousHash;
+    this.nonce = 0;
+    this.hash = this.calculateHash(this.nonce);
 
+    
   }
 
   /**
@@ -63,6 +68,13 @@ class Block {
    */
   calculateHash(nonce) {
     // Your code here
+    const hash = createHash('sha512');
+    let history = this.transactions.reduce((a, b) => {
+      return a + b.signature;
+    }, '');
+    hash.update(this.previousHash + nonce + history);
+
+    return hash.digest('hex');
 
   }
 }
